@@ -8,5 +8,5 @@ class Condenser():
     def __init__(self):
         self.provider = EC2Provider()
 
-    def condense(self, hostname, creator):
-        self.provider.condense(hostname, creator)
+    def condense(self, hostname, creator, description, puppetClass):
+        self.provider.condense(hostname, creator, description, puppetClass)
