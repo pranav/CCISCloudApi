@@ -1,0 +1,13 @@
+"""
+Settings for connecting to your AWS Account
+"""
+
+AWS_ACCESS_KEY = ''
+AWS_SECRET_KEY = ''
+
+AMAZON_LINUX_AMI = ''
+DEFAULT_AMI = AMAZON_LINUX_AMI
+ROOT_KEY = ''
+DEFAULT_INSTANCE = ''
+DEFAULT_SECURITY_GROUP = ''
+PUBLIC_SUBNET_ID = ''
