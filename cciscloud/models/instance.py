@@ -79,3 +79,7 @@ class Instance():
         ec2 = EC2Provider()
         return Instance.from_EC2Instance(ec2.reboot_instance(instance_id))
 
+    @staticmethod
+    def terminate_instance(instance_id):
+        ec2 = EC2Provider()
+        return Instance.from_EC2Instance(ec2.delete_instance(instance_id))

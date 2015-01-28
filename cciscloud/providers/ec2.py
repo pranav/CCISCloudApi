@@ -39,3 +39,6 @@ class EC2Provider():
 
     def reboot_instance(self, instance_id):
         return self.conn.reboot_instances(instance_ids=[instance_id])
+
+    def delete_instance(self, instance_id):
+        return self.conn.terminate_instances(instance_ids=[instance_id])[0]

@@ -31,4 +31,7 @@ class InstanceApi(Resource):
         elif args['action'] == 'reboot':
             Instance.reboot_instance(identifier)
 
-        return "OK"
+        return { 'status': 'success' }
+
+    def delete(self, identifier):
+        return Instance.terminate_instance(identifier)
