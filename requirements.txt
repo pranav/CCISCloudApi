@@ -8,4 +8,5 @@ itsdangerous==0.24
 pytz==2013b
 six==1.9.0
 wsgiref==0.1.2
+boto==2.35.2
 -e .
