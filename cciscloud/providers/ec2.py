@@ -30,3 +30,12 @@ class EC2Provider():
 
     def get_instance_by_id(self, instance_id):
         return self.conn.get_only_instances(instance_ids=[instance_id])[0]
+
+    def stop_instance(self, instance_id):
+        return self.conn.stop_instances(instance_ids=[instance_id])
+
+    def start_instance(self, instance_id):
+        return self.conn.start_instances(instance_ids=[instance_id])
+
+    def reboot_instance(self, instance_id):
+        return self.conn.reboot_instances(instance_ids=[instance_id])
