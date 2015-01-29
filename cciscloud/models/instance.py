@@ -1,6 +1,12 @@
 import re
+import io
+import csv
 import json
+import zipfile
+import cStringIO
+from cciscloud import config
 from cciscloud.providers.ec2 import EC2Provider
+from cciscloud.providers.s3 import S3Provider
 
 
 class Instance():
@@ -83,3 +89,16 @@ class Instance():
     def terminate_instance(instance_id):
         ec2 = EC2Provider()
         return ec2.delete_instance(instance_id)
+
+    def get_cost(self):
+        s3 = S3Provider()
+        cost = 0.0
+        for row in s3.get_detailed_costs():
+            if row['ResourceId'] == self.instance_id:
+                cost += float(row['Cost'])
+        return cost
+
+    def to_dict(self):
+        d = self.__dict__
+        d['cost'] = self.get_cost()
+        return d

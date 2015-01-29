@@ -10,10 +10,11 @@ class InstanceApi(Resource):
         """
         if identifier == u'all':
             #TODO: Get username from request.
-            instances = [inst.__dict__ for inst in Instance.get_user_instances('hyfi')]
+            instances = [inst.to_dict() for inst in Instance.get_user_instances('hyfi')]
             return instances
         else:
-            return Instance.find_by_identifier(identifier).__dict__
+            #TODO: Separate cost into different api, this makes it too slow
+            return Instance.find_by_identifier(identifier).to_dict()
 
     def put(self, identifier):
         """
