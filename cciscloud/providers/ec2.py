@@ -7,7 +7,7 @@ class EC2Provider():
 
     def __init__(self, aws_access_key_id=config.AWS_ACCESS_KEY,
                  aws_secret_access_key=config.AWS_SECRET_KEY):
-        self.conn = boto.connect_ec2(aws_access_key_id=aws_access_key_id,
+        self.conn = boto.connect_ec2_endpoint(config.EC2_URL, aws_access_key_id=aws_access_key_id,
                                      aws_secret_access_key=aws_secret_access_key)
 
     def condense(self, hostname, creator, description, role, ami=config.DEFAULT_AMI, instance_type=config.DEFAULT_INSTANCE,
