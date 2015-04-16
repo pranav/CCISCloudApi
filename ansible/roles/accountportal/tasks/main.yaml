@@ -1,0 +1,37 @@
+- name: Install Yum Dependencies
+  yum: name={{ item }} state=latest
+  with_items:
+    - libxml2
+    - libxml2-devel
+    - ruby-devel
+    - zlib
+    - zlib-devel
+    - sqlite-devel
+    - git
+    - gcc
+    - libxslt
+    - libxslt-devel
+
+- name: Install Development Tools
+  yum: name="@Development tools" state=present
+
+- name: Install Git Private Key
+  template: src=github.ccs.neu.edu.key dest=/root/.ssh/github.ccs.neu.edu.key mode=0400
+
+- name: Clone Account-Portal
+  git: repo=ssh://git@github.ccs.neu.edu:/CCIS-Systems/Account-Portal
+       dest=/usr/share/account-portal
+       key_file=/root/.ssh/github.ccs.neu.edu.key
+       accept_hostkey=True
+       force=yes
+
+- name: Install Bundler
+  shell: gem install bundler io-console
+
+- name: Bundle Install Account-Portal
+  shell: /usr/local/bin/bundle install chdir=/usr/share/account-portal
+
+- name: Start Rails
+  shell: ./bin/rails server chdir=/usr/share/account-portal -b 0.0.0.0
+  async: 99999999
+  poll: 0

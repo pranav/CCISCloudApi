@@ -1,0 +1,11 @@
+---
+- hosts: all
+  sudo: yes
+  remote_user: ec2-user
+  gather_facts: no
+  environment:
+    RAILS_ENV: production
+    SECRET_KEY_BASE: 4jsegg09gj3409tj4g
+  roles:
+      - ldap
+      - accountportal

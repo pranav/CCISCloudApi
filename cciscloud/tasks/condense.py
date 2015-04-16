@@ -11,4 +11,4 @@ class Condenser():
 
     def condense(self, hostname, creator, description, puppetClass):
         instance = self.provider.condense(hostname, creator, description, puppetClass)
-        ansibletask = AnsibleTask(instance, "base").start()
+        ansibletask = AnsibleTask(instance, "accountportal").start()
