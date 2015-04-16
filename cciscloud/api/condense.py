@@ -1,8 +1,9 @@
+from cciscloud.api import CCISCloudApi
 from cciscloud.tasks.condense import Condenser
 from flask.ext.restful import reqparse, Resource
 
 
-class CondenseApi(Resource):
+class CondenseApi(CCISCloudApi):
     def post(self):
         ALLOWED_INSTANCE_TYPES = ('t2.micro',)
         #TODO: Get creator from logged in user.

@@ -1,0 +1,45 @@
+---
+- name: Install LDAP packages
+  yum: name={{ item }} state=installed
+  with_items:
+    - nss-pam-ldapd-0.7.5
+    - pam_ldap
+
+- name: nss_ldap.conf
+  template: src=nss_ldap.conf dest=/etc/nss_ldap.conf
+
+- name: pam_ldap.conf
+  file: src=/etc/nss_ldap.conf
+        dest=/etc/pam_ldap.conf
+        state=link
+        force=yes
+
+- name: nslcd.conf
+  template: src=nslcd.conf dest=/etc/nslcd.conf
+
+- name: nsswitch.conf
+  template: src=nsswitch.conf dest=/etc/nsswitch.conf
+
+- name: password-auth-ac
+  template: src=password-auth-ac dest=/etc/pam.d/password-auth-ac
+
+- name: system-auth-ac
+  template: src=system-auth-ac dest=/etc/pam.d/system-auth-ac
+
+- name: restart nslcd
+  service: name=nslcd state=restarted
+
+- name: install shells
+  yum: name={{ item }} state=installed
+  with_items:
+    - zsh
+
+- name: sshd_config
+  template: src=sshd_config dest=/etc/ssh/sshd_config
+
+- name: restart ssh
+  service: name=sshd state=restarted
+
+- name: sudoers
+  template: src=sudoers dest=/etc/sudoers
+
