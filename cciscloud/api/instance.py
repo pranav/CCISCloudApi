@@ -22,7 +22,6 @@ class InstanceApi(CCISCloudApi):
 
     def put(self, identifier):
         """
-
         :param identifier: str instance_id
         :return:
         """
@@ -50,8 +49,8 @@ class InstanceApi(CCISCloudApi):
         parser.add_argument('hostname', type=str, required=True)
         parser.add_argument('instance_type', choices=self.ALLOWED_INSTANCE_TYPES, type=str, required=True)
         parser.add_argument('description', default="Created by %s" % creator, required=False)
-        parser.add_argument('puppetClass', default="ccis::role_base", required=False)
+        parser.add_argument('ansibleTask', default="base", required=False)
         args = parser.parse_args()
         condenser = Condenser()
-        condenser.condense(args['hostname'], creator, args['description'], args['puppetClass'])
-        return {'status': 'success'}
+        instance = condenser.condense(args['hostname'], creator, args['description'], args['ansibleTask'])
+        return {'status': 'success', 'instance_id': instance.id }

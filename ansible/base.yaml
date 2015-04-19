@@ -4,4 +4,4 @@
   remote_user: ec2-user
   gather_facts: no
   roles:
-      - ldap
+      - base

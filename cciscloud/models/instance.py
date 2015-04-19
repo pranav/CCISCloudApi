@@ -57,7 +57,7 @@ class Instance():
         """
         Construct Instance from boto Instance
         :type ec2_instance: boto.ec2.instance.Instance
-        :return: Instance
+        :rtype: cciscloud.models.instance.Instance
         """
         return Instance(ec2_instance._state.name, ec2_instance.dns_name,
                         ec2_instance.ebs_optimized, ec2_instance.eventsSet, ec2_instance.id, ec2_instance.image_id, ec2_instance.instance_type,

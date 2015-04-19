@@ -12,13 +12,24 @@ class EC2Provider():
 
     def condense(self, hostname, creator, description, role, ami=config.DEFAULT_AMI, instance_type=config.DEFAULT_INSTANCE,
                  security_group_ids=[config.DEFAULT_SECURITY_GROUP], dry_run=False):
+        """
+        :param hostname:
+        :param creator:
+        :param description:
+        :param role:
+        :param ami:
+        :param instance_type:
+        :param security_group_ids:
+        :param dry_run:
+        :rtype: boto.ec2.instance.Instance
+        """
         self.reservation = self.conn.run_instances(ami, key_name=config.ROOT_KEY,
                                                    instance_type=instance_type,
                                                    security_group_ids=security_group_ids,
                                                    subnet_id=config.PUBLIC_SUBNET_ID,
                                                    dry_run=dry_run)
         self.reservation.instances[0].add_tags({'hostname': hostname, 'Name': hostname, 'creator': creator,
-                                                'description': description, 'puppetClass': role})
+                                                'description': description, 'role': role})
         return self.reservation.instances[0]
 
     def get_instances_by_tag(self, tag_name, tag_value):

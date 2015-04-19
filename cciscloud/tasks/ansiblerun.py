@@ -13,10 +13,8 @@ class AnsibleTask():
         """
         self.instance_id = instance.id
         self.playbook = playbook
-        self.thread = threading.Thread(target=self.task)
-        self.thread.daemon = True
 
-    def task(self):
+    def run(self):
         instance = Instance.from_instance_id(self.instance_id)
         while True:
             instance = Instance.from_instance_id(self.instance_id)
@@ -24,9 +22,6 @@ class AnsibleTask():
                 break
             time.sleep(1)
         return AnsibleProvider([instance.public_ip_address], self.playbook).run()
-
-    def start(self):
-        return self.thread.start()
 
     @staticmethod
     def check_ssh_open(instance):
@@ -37,8 +32,8 @@ class AnsibleTask():
         """
         if instance.public_ip_address is None:
             return False
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(1)
             sock.connect((instance.public_ip_address, 22))
             sock.recv(2048)

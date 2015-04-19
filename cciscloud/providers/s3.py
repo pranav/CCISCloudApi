@@ -7,6 +7,8 @@ import cStringIO
 from cciscloud import config
 
 
+S3_CACHE = {}
+
 class S3Provider():
     def __init__(self, aws_acccess_key_id=config.AWS_ACCESS_KEY, aws_secret_access_key_id=config.AWS_SECRET_KEY):
         self.conn = boto.connect_s3(aws_access_key_id=aws_acccess_key_id, aws_secret_access_key=aws_secret_access_key_id)
@@ -25,5 +27,9 @@ class S3Provider():
         return csv.DictReader(raw_csv)
 
     def get_file_contents(self, bucket, path):
-        return self.conn.get_bucket(bucket).get_key(path).get_contents_as_string()
+        # TODO: Real caching because this is not legit at all.
+        global S3_CACHE
+        if not ("%s/%s" % (bucket, path) in S3_CACHE.keys()):
+            S3_CACHE["%s/%s" % (bucket, path)] = self.conn.get_bucket(bucket).get_key(path).get_contents_as_string()
+        return S3_CACHE["%s/%s" % (bucket, path)]
 
