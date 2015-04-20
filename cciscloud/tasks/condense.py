@@ -1,4 +1,5 @@
 import threading
+from cciscloud.models.cloudinit import generate_user_data
 from cciscloud.models.instance import Instance
 from cciscloud.providers.ec2 import EC2Provider
 from cciscloud.tasks.DNSTask import DNSTask
@@ -19,7 +20,11 @@ class Condenser():
         :param ansibleTask:
         :rtype: boto.ec2.instance.Instance
         """
-        instance = self.provider.condense(hostname, creator, description, ansibleTask)
+        instance = self.provider.condense(hostname,
+                                          creator,
+                                          description,
+                                          ansibleTask,
+                                          generate_user_data("%s.%s.ccis.io" % (hostname, creator)))
         self.start_async_tasks(instance, ansibleTask)
         return instance
 

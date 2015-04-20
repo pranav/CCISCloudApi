@@ -10,23 +10,16 @@ class EC2Provider():
         self.conn = boto.connect_ec2(aws_access_key_id=aws_access_key_id,
                                      aws_secret_access_key=aws_secret_access_key)
 
-    def condense(self, hostname, creator, description, role, ami=config.DEFAULT_AMI, instance_type=config.DEFAULT_INSTANCE,
+    def condense(self, hostname, creator, description, role, user_data, ami=config.DEFAULT_AMI, instance_type=config.DEFAULT_INSTANCE,
                  security_group_ids=[config.DEFAULT_SECURITY_GROUP], dry_run=False):
         """
-        :param hostname:
-        :param creator:
-        :param description:
-        :param role:
-        :param ami:
-        :param instance_type:
-        :param security_group_ids:
-        :param dry_run:
         :rtype: boto.ec2.instance.Instance
         """
         self.reservation = self.conn.run_instances(ami, key_name=config.ROOT_KEY,
                                                    instance_type=instance_type,
                                                    security_group_ids=security_group_ids,
                                                    subnet_id=config.PUBLIC_SUBNET_ID,
+                                                   user_data=user_data,
                                                    dry_run=dry_run)
         self.reservation.instances[0].add_tags({'Name': hostname, 'creator': creator,
                                                 'description': description, 'role': role})
