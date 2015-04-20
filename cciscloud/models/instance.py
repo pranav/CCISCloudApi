@@ -50,7 +50,7 @@ class Instance():
     @staticmethod
     def from_hostname(hostname):
         ec2 = EC2Provider()
-        return Instance.from_EC2Instance(ec2.get_instances_by_tag("hostname", hostname)[0])
+        return Instance.from_EC2Instance(ec2.get_instances_by_tag("Name", hostname)[0])
 
     @staticmethod
     def from_EC2Instance(ec2_instance):

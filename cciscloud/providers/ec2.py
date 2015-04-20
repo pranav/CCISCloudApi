@@ -28,7 +28,7 @@ class EC2Provider():
                                                    security_group_ids=security_group_ids,
                                                    subnet_id=config.PUBLIC_SUBNET_ID,
                                                    dry_run=dry_run)
-        self.reservation.instances[0].add_tags({'hostname': hostname, 'Name': hostname, 'creator': creator,
+        self.reservation.instances[0].add_tags({'Name': hostname, 'creator': creator,
                                                 'description': description, 'role': role})
         return self.reservation.instances[0]
 
