@@ -7,7 +7,7 @@ from flask.ext.restful import reqparse, Resource
 
 class InstanceApi(CCISCloudApi):
 
-    ALLOWED_INSTANCE_TYPES = ('t2.micro',)
+    ALLOWED_INSTANCE_TYPES = ('t2.micro', 't2.small')
 
     def get(self, identifier):
         """
