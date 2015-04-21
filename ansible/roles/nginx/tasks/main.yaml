@@ -1,5 +1,5 @@
 ---
-- name: Install mysql-server
+- name: Install nginx-server
   yum: name=nginx state=installed
 
 - name: Start NGINX server
