@@ -73,17 +73,17 @@ class Instance():
     @staticmethod
     def stop_instance(instance_id):
         ec2 = EC2Provider()
-        return Instance.from_EC2Instance(ec2.stop_instance(instance_id))
+        return ec2.stop_instance(instance_id)
 
     @staticmethod
     def start_instance(instance_id):
         ec2 = EC2Provider()
-        return Instance.from_EC2Instance(ec2.start_instance(instance_id))
+        return ec2.start_instance(instance_id)
 
     @staticmethod
     def reboot_instance(instance_id):
         ec2 = EC2Provider()
-        return Instance.from_EC2Instance(ec2.reboot_instance(instance_id))
+        return ec2.reboot_instance(instance_id)
 
     @staticmethod
     def terminate_instance(instance_id):
